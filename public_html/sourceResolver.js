@@ -19,9 +19,19 @@ require( [ "astws/sourceResolver", "dojo/dom", "dojo/dom-construct", "dojo/dom-a
 			     if (res) {
 				 var ra = domConstruct.create('p', {
 				     'id': 'rightAscension',
-				     'innerHTML': 'RA: ' + res['ra']
+				     'innerHTML': 'RA: ' + res['position']['ra']
 				 });
 				 dom.byId('results-area').appendChild(ra);
+				 var dec = domConstruct.create('p', {
+				     'id': 'declination',
+				     'innerHTML': 'Dec: ' + res['position']['dec']
+				 });
+				 dom.byId('results-area').appendChild(dec);
+				 var epoch = domConstruct.create('p', {
+				     'id': 'rightAscension',
+				     'innerHTML': 'Epoch: ' + res['position']['epoch']
+				 });
+				 dom.byId('results-area').appendChild(epoch);
 			     } else {
 				 var e = domConstruct.create('p', {
 				     'id': 'errorMessage',
