@@ -53,10 +53,8 @@ define([ "dojo/_base/lang", "dojo/_base/Deferred", "dojo/_base/xhr" ],
 	       });
 
 	       // Call the data and error handlers.
-	       postDeferred.then(_private_resolveSuccess,
-				 _private_resolveError);
-
-	       return postDeferred;
+	       return postDeferred.then(_private_resolveSuccess,
+				        _private_resolveError);
 	   };
 	   /*
 	    * Resolve a source given its name.
