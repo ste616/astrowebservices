@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="/css/css-reset.css" />
     <title>Source Name Resolver</title>
     <script src="/jslib/dojo/configure.js"></script>
     <script src="/~ste616/my_js/configure_astws.js"></script>
@@ -15,7 +16,25 @@
     </div>
 
     <div id="results-area">
-      
+      <div id="position-info" class="hidden">
+	<table>
+	  <tr>
+	    <th>Right Ascension:</th>
+	    <td id="position-right-ascension"></td>
+	  </tr>
+	  <tr>
+	    <th>Declination:</th>
+	    <td id="position-declination"></td>
+	  </tr>
+	  <tr>
+	    <th>Epoch:</th>
+	    <td id="position-epoch"></td>
+	  </tr>
+	</table>
+      </div>
+      <div id="resolve-error" class="hidden">
+	
+      </div>
     </div>
 
     <script src="sourceResolver.js"></script>
