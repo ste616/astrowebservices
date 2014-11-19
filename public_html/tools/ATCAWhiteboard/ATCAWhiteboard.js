@@ -17,4 +17,15 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 		 });
 		     
 	     }
+
+	     // Make some event responders.
+	     on(dom.byId('arrayTable'), 'mousedown', function(e) {
+		 console.log('mouse button pressed');
+		 console.log(e.target);
+	     });
+
+	     on(dom.byId('arrayTable'), 'mouseup', function(e) {
+		 console.log('mouse button released');
+		 console.log(e.target);
+	     });
 	 });
