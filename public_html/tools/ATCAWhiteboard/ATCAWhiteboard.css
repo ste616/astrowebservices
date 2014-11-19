@@ -4,7 +4,11 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
 * { font-family: "Roboto Condensed" }
 
+body { padding: 1em; }
+
 h1 { font-size: 2em; text-align: center; }
 h2 { font-size: 1.6em; text-align: center; }
 
-table { width: 100%; border-collapse: collapse; border: 2px solid black; }
+table { width: 100%; border-collapse: collapse; border: 2px solid black; 
+	margin-top: 2em; }
+thead th { text-align: left; background: black; color: white; padding: 0.3em 0; }
