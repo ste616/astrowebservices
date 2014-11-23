@@ -13,13 +13,14 @@ h2 { font-size: 1.6em; text-align: center; }
 #under-table, #over-table { position: absolute; top: 0; left: 0; width: 100%; }
 #over-table { z-index: 100; opacity: 0%; }
 
-th, td {
+th, td, div#table-holder {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    cursor: default;
 }
 table { width: 100%; border-collapse: collapse; border: 2px solid black; 
 	margin-top: 2em; }
