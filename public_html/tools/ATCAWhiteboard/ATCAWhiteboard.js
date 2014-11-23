@@ -42,12 +42,14 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	   // Make some event responders.
 	   on(dom.byId('array-table-over'), 'mousedown', function(e) {
 	     console.log(domAttr.get(e.target, 'class'));
+	     console.log(domAttr.get(e.target.parentNode, 'id'));
 	     console.log('mouse button pressed');
 	     console.log(e.target);
 	   });
 	   
 	   on(dom.byId('array-table-over'), 'mouseup', function(e) {
 	     console.log(domAttr.get(e.target, 'class'));
+	     console.log(domAttr.get(e.target.parentNode, 'id'));
 	     console.log('mouse button released');
 	     console.log(e.target);
 	   });
