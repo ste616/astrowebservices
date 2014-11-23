@@ -26,22 +26,28 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	   }
 	   
 	   // Highlight an area.
-	   var startBox = null;
-	   var stopBox = null;
+	   var highlightStart = {
+	     'antenna': null,
+	     'box': null
+	   };
+	   var highlightStop = {
+	     'antenna': null,
+	     'box': null
+	   };
+
 	   var highlightArea = function() {
-	     if (startBox === null || stopBox === null) {
-	       return;
-	     }
 	     
 	   };
 
 	   // Make some event responders.
 	   on(dom.byId('array-table-over'), 'mousedown', function(e) {
+	     console.log(domAttr.get(e.target, 'class'));
 	     console.log('mouse button pressed');
 	     console.log(e.target);
 	   });
 	   
 	   on(dom.byId('array-table-over'), 'mouseup', function(e) {
+	     console.log(domAttr.get(e.target, 'class'));
 	     console.log('mouse button released');
 	     console.log(e.target);
 	   });
