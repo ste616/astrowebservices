@@ -11,7 +11,7 @@ h2 { font-size: 1.6em; text-align: center; }
 
 #table-holder { position: relative; width: 100%; }
 #under-table, #over-table { position: absolute; top: 0; left: 0; width: 100%; }
-#over-table { z-index: 100; opacity: 0%; }
+#over-table { z-index: 100; }
 
 th, td, div#table-holder {
     -webkit-touch-callout: none;
@@ -32,4 +32,4 @@ tbody th { background: blue; color: yellow; border-right: 2px solid black;
 tbody td { border: 1px dotted #444; }
 tbody td.breaktime { background: repeating-linear-gradient(-55deg, #0c6, #0c6 10px, #0e6 10px, #0e6 20px); }
 
-tbody td.highlighted { background: pink; opacity: 75%; }
+tbody td.highlighted { background-color: rgba(255, 255, 0, 0.7); }
