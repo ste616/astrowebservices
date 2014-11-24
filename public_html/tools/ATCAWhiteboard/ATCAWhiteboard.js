@@ -62,10 +62,8 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	       for (s = 0; s <= maxspace; s++) {
 		 cfind = ".space-over" + s;
 		 afind = "ca0" + a + "-row-over";
-		 console.log(cfind + " " + afind);
-		 query(cfind, afind).forEach(function(node) {
-		   domClass.remove('highlighted');
-		 });
+		 // console.log(cfind + " " + afind);
+		 query(cfind, afind).removeClass('highlighted');
 	       }
 	     }
 
@@ -73,10 +71,7 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	       for (s = minbox; s <= maxbox; s++) {
 		 cfind = ".space-over" + s;
 		 afind = "ca0" + a + "-row-over";
-		 console.log(cfind + " " + afind);
-		 query(cfind, afind).forEach(function(node) {
-		   domClass.add('highlighted');
-		 });
+		 query(cfind, afind).addClass('highlighted');
 	       }
 	     }
 	     
