@@ -87,9 +87,7 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	   // Determine things from the event target.
 	   var parseTarget = function(e) {
 	     var t = /ca0(.)-row-over/.exec(domAttr.get(e.target.parentNode, 'id'));
-	     highlightStart['antenna'] = parseInt(t[1]);
 	     var u = /space-over(.*)$/.exec(domAttr.get(e.target, 'class'));
-	     highlightStart['box'] = parseInt(t[1]);
 
 	     return { 'antenna': parseInt(t[1]),
 		      'box': parseInt(u[1]) };
