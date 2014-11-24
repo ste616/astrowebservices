@@ -5,6 +5,7 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	   
 	   // Add some classes to the cells of the table.
 	   var i;
+	   var maxspace = 0;
 	   for (i = 1; i <= 6; i++) {
 	     var tr = dom.byId("ca0" + i + "-row-under");
 	     var j = 0;
@@ -20,6 +21,7 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	     j = 0;
 	     query("td", tr).forEach(function(node) {
 	       domClass.add(node, "space-over" + j);
+	       maxspace = (j > maxspace) ? j : maxspace;
 	       j++;
 	     });
 	     
@@ -34,23 +36,82 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	     'antenna': null,
 	     'box': null
 	   };
+	   var mouseDown = false;
 
 	   var highlightArea = function() {
+	     // Find the corners.
+	     var minant = (highlightStart['antenna'] < highlightStop['antenna'])
+	    ? highlightStart['antenna'] : highlightStop['antenna'];
+	     
+	     var maxant = (highlightStart['antenna'] > highlightStop['antenna'])
+	    ? highlightStart['antenna'] : highlightStop['antenna'];
+	    
+	     var minbox = (highlightStart['box'] < highlightStop['box'])
+	    ? highlightStart['box'] : highlightStop['box'];
+
+	     var maxbox = (highlightStart['box'] > highlightStop['box'])
+	    ? highlightStart['box'] : highlightStop['box'];
+
+	     var a, s;
+	     for (a = 1; a <= 6; a++) {
+	       for (s = 0; s <= maxspace; s++) {
+		 query(".space-over" + s, dom.byId("ca0" + a + "-row-over")).forEach(function(node) {
+		   domClass.remove('highlighted');
+		 });
+	       }
+	     }
+
+	     for (a = minant; a <= maxant; a++) {
+	       for (s = minbox; s <= maxbox; s++) {
+		 query(".space-over" + s, dom.byId("ca0" + a + "-row-over")).forEach(function(node) {
+		   domClass.add('highlighted');
+		 });
+	       }
+	     }
 	     
 	   };
 
 	   // Make some event responders.
 	   on(dom.byId('array-table-over'), 'mousedown', function(e) {
-	     console.log(domAttr.get(e.target, 'class'));
-	     console.log(domAttr.get(e.target.parentNode, 'id'));
-	     console.log('mouse button pressed');
-	     console.log(e.target);
+	     // Set the start element.
+	     var t = /ca0(.)-row-over/.exec(domAttr.get(e.target.parentNode, 'id'));
+	     highlightStart['antenna'] = t[1];
+	     t = /space-over(.)/.exec(domAttr.get(e.target, 'class'));
+	     highlightStart['box'] = t[1];
+
+	     // Indicate that the mouse button is down now.
+	     mouseDown = true;
+
+	     // Highlight this cell.
+	     domClass.add(e.target, 'highlighted');
 	   });
 	   
 	   on(dom.byId('array-table-over'), 'mouseup', function(e) {
-	     console.log(domAttr.get(e.target, 'class'));
-	     console.log(domAttr.get(e.target.parentNode, 'id'));
-	     console.log('mouse button released');
-	     console.log(e.target);
+	     // Set the end element.
+	     var t = /ca0(.)-row-over/.exec(domAttr.get(e.target.parentNode, 'id'));
+	     highlightStop['antenna'] = t[1];
+	     t = /space-over(.)/.exec(domAttr.get(e.target, 'class'));
+	     highlightStop['box'] = t[1];
+
+	     // Indicate that the mouse button is no longer down.
+	     mouseDown = false;
+
+	     // Highlight this cell.
+	     domClass.add(e.target, 'highlighted');
+	   });
+
+	   on(dom.byId('array-table-over'), 'mouseover', function(e) {
+	     // Don't do anything if the mouse button is not down.
+	     if (!mouseDown) {
+	       return;
+	     }
+
+	     var t = /ca0(.)-row-over/.exec(domAttr.get(e.target.parentNode, 'id'));
+	     highlightStop['antenna'] = t[1];
+	     t = /space-over(.)/.exec(domAttr.get(e.target, 'class'));
+	     highlightStop['box'] = t[1];
+
+	     // Highlight all the cells.
+	     highlightArea();
 	   });
 	 });
