@@ -84,9 +84,9 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	   on(dom.byId('array-table-over'), 'mousedown', function(e) {
 	     // Set the start element.
 	     var t = /ca0(.)-row-over/.exec(domAttr.get(e.target.parentNode, 'id'));
-	     highlightStart['antenna'] = t[1];
+	     highlightStart['antenna'] = parseInt(t[1]);
 	     t = /space-over(.)/.exec(domAttr.get(e.target, 'class'));
-	     highlightStart['box'] = t[1];
+	     highlightStart['box'] = parseInt(t[1]);
 
 	     // Indicate that the mouse button is down now.
 	     mouseDown = true;
@@ -98,9 +98,9 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	   on(dom.byId('array-table-over'), 'mouseup', function(e) {
 	     // Set the end element.
 	     var t = /ca0(.)-row-over/.exec(domAttr.get(e.target.parentNode, 'id'));
-	     highlightStop['antenna'] = t[1];
+	     highlightStop['antenna'] = parseInt(t[1]);
 	     t = /space-over(.)/.exec(domAttr.get(e.target, 'class'));
-	     highlightStop['box'] = t[1];
+	     highlightStop['box'] = parseInt(t[1]);
 
 	     // Indicate that the mouse button is no longer down.
 	     mouseDown = false;
@@ -116,9 +116,9 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	     }
 
 	     var t = /ca0(.)-row-over/.exec(domAttr.get(e.target.parentNode, 'id'));
-	     highlightStop['antenna'] = t[1];
+	     highlightStop['antenna'] = parseInt(t[1]);
 	     t = /space-over(.)/.exec(domAttr.get(e.target, 'class'));
-	     highlightStop['box'] = t[1];
+	     highlightStop['box'] = parseInt(t[1]);
 
 	     // Highlight all the cells.
 	     highlightArea();
