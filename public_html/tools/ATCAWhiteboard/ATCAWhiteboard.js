@@ -52,6 +52,11 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	     var maxbox = (highlightStart['box'] > highlightStop['box'])
 	    ? highlightStart['box'] : highlightStop['box'];
 
+	     console.log(minant);
+	     console.log(maxant);
+	     console.log(minbox);
+	     console.log(maxbox);
+
 	     var a, s, cfind, afind;
 	     for (a = 1; a <= 6; a++) {
 	       for (s = 0; s <= maxspace; s++) {
