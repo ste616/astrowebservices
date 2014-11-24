@@ -55,7 +55,11 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	     var a, s;
 	     for (a = 1; a <= 6; a++) {
 	       for (s = 0; s <= maxspace; s++) {
-		 query(".space-over" + s, "ca0" + a + "-row-over").forEach(function(node) {
+		 var cfind = ".space-over" + s;
+		 var afind = "ca0" + a + "-row-over";
+		 console.log(cfind);
+		 console.log(afind);
+		 query(cfind, "ca0" + afind).forEach(function(node) {
 		   domClass.remove('highlighted');
 		 });
 	       }
