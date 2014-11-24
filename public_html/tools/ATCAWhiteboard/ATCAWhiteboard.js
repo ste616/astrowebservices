@@ -55,16 +55,16 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	   };
 
 	   // Select a box region and apply or remove a class to it.
-	   var applyClass = function(mina, maxa, minb, maxb, add) {
+	   var applyClass = function(mina, maxa, minb, maxb, add, className) {
 	     var a, s, cfind, afind;
 	     for (a = mina; a <= maxa; a++) {
 	       for (s = minb; s <= maxb; s++) {
 		 cfind = ".space-over" + s;
 		 afind = "ca0" + a + "-row-over";
 		 if (add) {
-		   query(cfind, afind).addClass('highlighted');
+		   query(cfind, afind).addClass(className);
 		 } else {
-		   query(cfind, afind).removeClass('highlighted');
+		   query(cfind, afind).removeClass(className);
 		 }
 	       }
 	     }
@@ -80,8 +80,17 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	     var maxbox = maxab(highlightStart['box'], highlightStop['box']);
 
 	     // Apply the classes to our regions.
-	     applyClass(1, 6, 0, maxspace, false);
-	     applyClass(minant, maxant, minbox, maxbox, true);	     
+	     applyClass(1, 6, 0, maxspace, false, 'highlighted');
+	     applyClass(minant, maxant, minbox, maxbox, true, 'highlighted');	     
+
+	     var bClasses = [ 'left-side', 'right-side', 'top-side', 'bottom-side' ];
+	     for (var b = 0; b < bClasses.length; b++) {
+	       applyClass(1, 6, 0, maxspace, false, bClasses[b]);
+	     }
+	     applyClass(minant, minant, minbox, maxbox, true, 'top-side');
+	     applyClass(maxant, maxant, minbox, maxbox, true, 'bottom-side');
+	     applyClass(minant, maxant, minbox, minbox, true, 'left-side');
+	     applyClass(minant, maxant, maxbox, maxbox, true, 'right-side');
 	   };
 
 	   // Determine things from the event target.

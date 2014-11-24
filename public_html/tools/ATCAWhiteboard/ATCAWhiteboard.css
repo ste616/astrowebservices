@@ -29,7 +29,11 @@ thead th { text-align: left; background: black; color: white; padding: 0.3em 0;
 thead td { background: white; color: white; border: 2px solid black; }
 tbody th { background: blue; color: yellow; border-right: 2px solid black;
 	   border-top: 2px solid black; padding: 0.3em 0; }
-tbody td { border: 1px dotted #444; }
+tbody td { border: 1px dotted #444; width: 5%; }
 tbody td.breaktime { background: repeating-linear-gradient(-55deg, #0c6, #0c6 10px, #0e6 10px, #0e6 20px); }
 
 tbody td.highlighted { background-color: rgba(255, 255, 0, 0.7); }
+tbody td.left-side { border-left: 1px solid black; }
+tbody td.top-side { border-top: 1px solid black; }
+tbody td.right-side { border-right: 1px solid black; }
+tbody td.bottom-side { border-bottom: 1px solid black; }
