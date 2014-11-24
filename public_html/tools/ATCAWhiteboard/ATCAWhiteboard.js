@@ -120,6 +120,7 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	  var ato = dom.byId('array-table-over');
 
      var clickHandler = function(e) {
+       console.log('click handler called');
        // Check if the click is within our selection area.
        var clickPosition = parseTarget(e);
        if (clickPosition['antenna'] >= highlightStart['antenna'] &&
@@ -135,6 +136,7 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
      on(ato, 'click', clickHandler);
      
 	   var startRegion = function(e) {
+       console.log('mousedown handler called');
 	     // Set the start element.
 	     highlightStart = parseTarget(e);
 
@@ -149,6 +151,7 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	   on(ato, touch.press, startRegion);
 
 	   var stopRegion = function(e) {
+       console.log('mouseup handler called');
 	     // Set the end element.
 	     highlightStop = parseTarget(e);
 
