@@ -1,7 +1,7 @@
 require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/dom-construct",
-	   "dojo/on",
+	   "dojo/on", "dojo/touch",
 	   "dojo/NodeList-dom" ],
-	 function(dom, query, domAttr, domClass, domConstruct, on) {
+	 function(dom, query, domAttr, domClass, domConstruct, on, touch) {
 	   
 	   // Add some classes to the cells of the table.
 	   var i;
@@ -94,7 +94,7 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	   };
 
 	   // Make some event responders.
-	   on(dom.byId('array-table-over'), 'mousedown', function(e) {
+	   var startRegion = function(e) {
 	     // Set the start element.
 	     highlightStart = parseTarget(e);
 
@@ -103,17 +103,23 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 
 	     // Highlight this cell.
 	     domClass.add(e.target, 'highlighted');
-	   });
-	   
-	   on(dom.byId('array-table-over'), 'mouseup', function(e) {
+	   };
+	   // Make it respond to both mouse clicks and touch presses.
+	   var ato = dom.byId('array-table-over');
+	   on(ato, 'mousedown', startRegion);
+	   on(ato, touch.press, startRegion);
+
+	   var stopRegion = function(e) {
 	     // Set the end element.
 	     highlightStop = parseTarget(e);
 
 	     // Indicate that the mouse button is no longer down.
 	     mouseDown = false;
-	   });
+	   };
+	   on(ato, 'mouseup', stopRegion);
+	   on(ato, touch.release, stopRegion);
 
-	   on(dom.byId('array-table-over'), 'mouseover', function(e) {
+	   var overRegion = function(e) {
 	     // Don't do anything if the mouse button is not down.
 	     if (!mouseDown) {
 	       return;
@@ -123,5 +129,7 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 
 	     // Highlight all the cells.
 	     highlightArea();
-	   });
+	   };
+	   on(ato, 'mouseover', overRegion);
+	   on(ato, touch.over, overRegion);
 	 });
