@@ -38,52 +38,67 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	   };
 	   var mouseDown = false;
 
-	   var highlightArea = function() {
-	     // Find the corners.
-	     var minant = (highlightStart['antenna'] < highlightStop['antenna'])
-	    ? highlightStart['antenna'] : highlightStop['antenna'];
-	     
-	     var maxant = (highlightStart['antenna'] > highlightStop['antenna'])
-	    ? highlightStart['antenna'] : highlightStop['antenna'];
-	    
-	     var minbox = (highlightStart['box'] < highlightStop['box'])
-	    ? highlightStart['box'] : highlightStop['box'];
-
-	     var maxbox = (highlightStart['box'] > highlightStop['box'])
-	    ? highlightStart['box'] : highlightStop['box'];
-
-	     console.log(minant);
-	     console.log(maxant);
-	     console.log(minbox);
-	     console.log(maxbox);
-
-	     var a, s, cfind, afind;
-	     for (a = 1; a <= 6; a++) {
-	       for (s = 0; s <= maxspace; s++) {
-		 cfind = ".space-over" + s;
-		 afind = "ca0" + a + "-row-over";
-		 // console.log(cfind + " " + afind);
-		 query(cfind, afind).removeClass('highlighted');
-	       }
+	   // Find the minimum and maximum of two values.
+	   var minab = function(a, b) {
+	     if (a < b) {
+	       return a;
+	     } else {
+	       return b;
 	     }
+	   };
+	   var maxab = function(a, b) {
+	     if (a > b) {
+	       return a;
+	     } else {
+	       return b;
+	     }
+	   };
 
-	     for (a = minant; a <= maxant; a++) {
-	       for (s = minbox; s <= maxbox; s++) {
+	   // Select a box region and apply or remove a class to it.
+	   var applyClass = function(mina, maxa, minb, maxb, add) {
+	     var a, s, cfind, afind;
+	     for (a = mina; a <= maxa; a++) {
+	       for (s = minb; s <= maxb; s++) {
 		 cfind = ".space-over" + s;
 		 afind = "ca0" + a + "-row-over";
-		 query(cfind, afind).addClass('highlighted');
+		 if (add) {
+		   query(cfind, afind).addClass('highlighted');
+		 } else {
+		   query(cfind, afind).removeClass('highlighted');
+		 }
 	       }
 	     }
 	     
 	   };
 
+	   var highlightArea = function() {
+	     // Find the corners.
+	     var minant = minab(highlightStart['antenna'], highlightStop['antenna']);
+	     var maxant = maxab(highlightStart['antenna'], highlightStop['antenna']);
+	    
+	     var minbox = minab(highlightStart['box'], highlightStop['box']);
+	     var maxbox = maxab(highlightStart['box'], highlightStop['box']);
+
+	     // Apply the classes to our regions.
+	     applyClass(1, 6, 0, maxspace, false);
+	     applyClass(minant, maxant, minbox, maxbox, true);	     
+	   };
+
+	   // Determine things from the event target.
+	   var parseTarget = function(e) {
+	     var t = /ca0(.)-row-over/.exec(domAttr.get(e.target.parentNode, 'id'));
+	     highlightStart['antenna'] = parseInt(t[1]);
+	     var u = /space-over(.*)$/.exec(domAttr.get(e.target, 'class'));
+	     highlightStart['box'] = parseInt(t[1]);
+
+	     return { 'antenna': parseInt(t[1]),
+		      'box': parseInt(u[1]) };
+	   };
+
 	   // Make some event responders.
 	   on(dom.byId('array-table-over'), 'mousedown', function(e) {
 	     // Set the start element.
-	     var t = /ca0(.)-row-over/.exec(domAttr.get(e.target.parentNode, 'id'));
-	     highlightStart['antenna'] = parseInt(t[1]);
-	     t = /space-over(.*)$/.exec(domAttr.get(e.target, 'class'));
-	     highlightStart['box'] = parseInt(t[1]);
+	     highlightStart = parseTarget(e);
 
 	     // Indicate that the mouse button is down now.
 	     mouseDown = true;
@@ -94,16 +109,10 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	   
 	   on(dom.byId('array-table-over'), 'mouseup', function(e) {
 	     // Set the end element.
-	     var t = /ca0(.)-row-over/.exec(domAttr.get(e.target.parentNode, 'id'));
-	     highlightStop['antenna'] = parseInt(t[1]);
-	     t = /space-over(.*)$/.exec(domAttr.get(e.target, 'class'));
-	     highlightStop['box'] = parseInt(t[1]);
+	     highlightStop = parseTarget(e);
 
 	     // Indicate that the mouse button is no longer down.
 	     mouseDown = false;
-
-	     // Highlight this cell.
-	     domClass.add(e.target, 'highlighted');
 	   });
 
 	   on(dom.byId('array-table-over'), 'mouseover', function(e) {
@@ -112,10 +121,7 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	       return;
 	     }
 
-	     var t = /ca0(.)-row-over/.exec(domAttr.get(e.target.parentNode, 'id'));
-	     highlightStop['antenna'] = parseInt(t[1]);
-	     t = /space-over(.*)$/.exec(domAttr.get(e.target, 'class'));
-	     highlightStop['box'] = parseInt(t[1]);
+	     highlightStop = parseTarget(e);
 
 	     // Highlight all the cells.
 	     highlightArea();
