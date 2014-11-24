@@ -28,14 +28,11 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	   }
 	   
 	   // Highlight an area.
-	   var highlightStart = {
-	     'antenna': null,
-	     'box': null
-	   };
-	   var highlightStop = {
-	     'antenna': null,
-	     'box': null
-	   };
+     var highlightReset = function() {
+       return { 'antenna': null, 'box': null };
+     };
+	   var highlightStart = highlightReset();
+	   var highlightStop = highlightReset();
 	   var mouseDown = false;
 
 	   // Find the minimum and maximum of two values.
@@ -59,19 +56,35 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	     var a, s, cfind, afind;
 	     for (a = mina; a <= maxa; a++) {
 	       for (s = minb; s <= maxb; s++) {
-		 cfind = ".space-over" + s;
-		 afind = "ca0" + a + "-row-over";
-		 if (add) {
-		   query(cfind, afind).addClass(className);
-		 } else {
-		   query(cfind, afind).removeClass(className);
-		 }
-	       }
-	     }
+		      cfind = ".space-over" + s;
+		      afind = "ca0" + a + "-row-over";
+		      if (add) {
+		        query(cfind, afind).addClass(className);
+		      } else {
+		        query(cfind, afind).removeClass(className);
+		      }
+	      }
+	    }
 	     
 	   };
 
 	   var highlightArea = function() {
+      // Blank the table of the highlight classes.
+	     applyClass(1, 6, 0, maxspace, false, 'highlighted');
+	     var bClasses = [ 'left-side', 'right-side', 'top-side', 'bottom-side' ];
+	     for (var b = 0; b < bClasses.length; b++) {
+	       applyClass(1, 6, 0, maxspace, false, bClasses[b]);
+	     }
+
+       // Check that we have something to highlight.
+       if (highlightStart['antenna'] === null ||
+         highlightStart['box'] === null ||
+         highlightStop['antenna'] === null ||
+         highlightStop['box'] === null) {
+           // No box.
+           return;
+        }
+       
 	     // Find the corners.
 	     var minant = minab(highlightStart['antenna'], highlightStop['antenna']);
 	     var maxant = maxab(highlightStart['antenna'], highlightStop['antenna']);
@@ -80,13 +93,8 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	     var maxbox = maxab(highlightStart['box'], highlightStop['box']);
 
 	     // Apply the classes to our regions.
-	     applyClass(1, 6, 0, maxspace, false, 'highlighted');
 	     applyClass(minant, maxant, minbox, maxbox, true, 'highlighted');	     
 
-	     var bClasses = [ 'left-side', 'right-side', 'top-side', 'bottom-side' ];
-	     for (var b = 0; b < bClasses.length; b++) {
-	       applyClass(1, 6, 0, maxspace, false, bClasses[b]);
-	     }
 	     applyClass(minant, minant, minbox, maxbox, true, 'top-side');
 	     applyClass(maxant, maxant, minbox, maxbox, true, 'bottom-side');
 	     applyClass(minant, maxant, minbox, minbox, true, 'left-side');
@@ -102,7 +110,30 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 		      'box': parseInt(u[1]) };
 	   };
 
-	   // Make some event responders.
+     var clearHighlight = function() {
+       highlightStart = highlightReset();
+       highlightStop = highlightReset();
+       highlightArea();
+     };
+
+    // Make some event responders.
+	  var ato = dom.byId('array-table-over');
+
+     var clickHandler = function(e) {
+       // Check if the click is within our selection area.
+       var clickPosition = parseTarget(e);
+       if (clickPosition['antenna'] >= highlightStart['antenna'] &&
+         clickPosition['antenna'] <= highlightStop['antenna'] &&
+         clickPosition['box'] >= highlightStart['box'] &&
+         clickPosition['box'] <= highlightStop['box']) {
+           // We want to fill this area in with some information.
+        } else {
+          // We want to blank out the highlight box.
+          clearHighlight();
+        }
+     };
+     on(ato, 'click', clickHandler);
+     
 	   var startRegion = function(e) {
 	     // Set the start element.
 	     highlightStart = parseTarget(e);
@@ -114,7 +145,6 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	     domClass.add(e.target, 'highlighted');
 	   };
 	   // Make it respond to both mouse clicks and touch presses.
-	   var ato = dom.byId('array-table-over');
 	   on(ato, 'mousedown', startRegion);
 	   on(ato, touch.press, startRegion);
 
