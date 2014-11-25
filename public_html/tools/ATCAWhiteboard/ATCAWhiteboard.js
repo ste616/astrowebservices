@@ -157,6 +157,7 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
        
        // Do something based on the time the mouse button was pressed.
        if (clickTime < 10) {
+         console.log('short tick registered');
          // This is a short click.
         // Check if the click is within our selection area.
          var clickPosition = parseTarget(e);
