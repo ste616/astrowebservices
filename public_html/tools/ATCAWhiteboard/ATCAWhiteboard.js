@@ -151,6 +151,8 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
        // Stop the click timer.
        clearInterval(timeout);
        
+       console.log('timer stopped at ' + clickTime);
+       
        // Do something based on the time the mouse button was pressed.
        if (clickTime < 1) {
          // This is a short click.
