@@ -121,8 +121,9 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 
      var clickTime = 0, timeout = null;
      var clickTick = function() {
-       clickTime++;
-       highlightArea();
+       if (mouseDown) {
+         clickTime++;
+       }
      };
 	   var startRegion = function(e) {
 	     // Set the start element.
