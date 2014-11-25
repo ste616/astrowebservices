@@ -111,6 +111,7 @@ require( [ "dojo/dom", "dojo/query", "dojo/dom-attr", "dojo/dom-class", "dojo/do
 	   };
 
      var clearHighlight = function() {
+       console.log('clearing the highlight');
        highlightStart = highlightReset();
        highlightStop = highlightReset();
        highlightArea();
