@@ -20,6 +20,7 @@ function handler (request, response) {
     var dr = /^\/spectraViewer\/(.*)\/*$/.exec(path);
     var dataset = dr[1];
     ioFunctions['connection'] = function(socket) {
+      console.log('emitting dataset');
       socket.emit('dataset', { 'dataset': dr[1] } );
     };
     if (typeof dataset !== 'undefined') {
