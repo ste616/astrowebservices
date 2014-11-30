@@ -9,14 +9,12 @@ var server = require('http').Server(app);
 var fs = require('fs');
 var io = require('socket.io')(server);
 
-app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
-});
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(app.router);
+app.use(express.static(__dirname + '/public'));
 
 var displayDataset = function(dataset) {
   io.on('connection', function(socket) {
