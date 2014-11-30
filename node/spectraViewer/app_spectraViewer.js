@@ -19,7 +19,7 @@ function handler (request, response) {
     io.on('connection', function(socket) {
       console.log('emitting dataset');
       // Read the configuration file.
-      fs.readFile('data/' + dr[1] + '/description.json', 'utf', function(err, data) {
+      fs.readFile('data/' + dr[1] + '/description.json', 'utf8', function(err, data) {
 	if (err) throw err;
 	fileObj = JSON.parse(data);
 	socket.emit('dataset', { 'dataset': fileObj['name'],
