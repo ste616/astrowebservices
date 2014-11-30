@@ -7,7 +7,7 @@ var io = require('socket.io')(app);
 
 app.listen(8001);
 
-var handleDataset = function(dataset) {
+var handleDataset = function(dataset, request, response) {
     var fileObj;
     io.on('connection', function(socket) {
       console.log('emitting dataset');
@@ -56,7 +56,7 @@ function handler (request, response) {
     // User wants the spectra viewer.
     var dr = /^\/spectraViewer\/(.*)\/*$/.exec(path);
     var dataset = dr[1];
-    handleDataset(dataset);
+    handleDataset(dataset, request, response);
   } else if (/^\/scripts\//.test(path)) {
     // Return the user a JS.
     var dr = /^\/scripts\/(.*)$/.exec(path);
