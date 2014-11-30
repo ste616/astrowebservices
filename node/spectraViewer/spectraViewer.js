@@ -32,9 +32,10 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 	       imageTrans['display-width'] = Math.abs(imageTrans['display-x'][1] - imageTrans['display-x'][0]);
 	       imageTrans['display-height'] = Math.abs(imageTrans['display-y'][1] - imageTrans['display-y'][0]);
 	     }
+	     console.log(e);
 	     var xoff = e.offsetX - imageTrans['bottom-left'][0];
 	     var yoff = imageTrans['bottom-left'][1] - e.offsetY;
-	     // console.log(xoff + ' ' + yoff);
+	     console.log(xoff + ' ' + yoff);
 	     if (xoff >= 0 && xoff <= imageTrans['display-width'] &&
 		 yoff >= 0 && yoff <= imageTrans['display-height']) {
 	       var px = xoff * (imageTrans['real'][0] / imageTrans['display-width']);
