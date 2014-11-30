@@ -6,7 +6,7 @@ var fs = require('fs');
 
 var server = http.createServer(function(request, response) {
   console.log('Connection.');
-  console.log(request);
+  console.log(request.url);
   var path = url.parse(request.url).pathname;
 
   response.writeHead(200, { 'Content-Type': 'text/html' });
