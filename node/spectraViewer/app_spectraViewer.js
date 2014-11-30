@@ -35,7 +35,7 @@ var datasetHandler = function(dataset) {
   };
 
   var positionRequest = function(idata) {
-    var n = './data/' + dataset + '/positions/pos_' + data['pix'][0] + '_' + data['pix'][1];
+    var n = './data/' + dataset + '/positions/pos_' + idata['pix'][0] + '_' + idata['pix'][1];
     fs.readFile(n, 'utf8', function(err, data) {
       if (err) {
 	return;
