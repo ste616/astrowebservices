@@ -26,7 +26,7 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 	       imgPos = domGeom.position(e.target);
 	       // console.log(imgPos);
 	       imageTrans['bottom-left'] = [ imageTrans['display-x'][0],
-					     imageTrans['display-y'][1] ];
+					     imageTrans['display-y'][0] ];
 	       imageTrans['top-right'] = [ imageTrans['display-x'][1],
 					   imageTrans['display-y'][1] ];
 	       imageTrans['display-width'] = Math.abs(imageTrans['display-x'][1] - imageTrans['display-x'][0]);
