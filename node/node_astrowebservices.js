@@ -7,9 +7,6 @@ var io = require('socket.io')(app);
 
 app.listen(8001);
 
-var ioFunctions = {
-  'connection': function() {}
-};
 
 function handler (request, response) {
   console.log('Connection.');
@@ -19,10 +16,10 @@ function handler (request, response) {
     // User wants the spectra viewer.
     var dr = /^\/spectraViewer\/(.*)\/*$/.exec(path);
     var dataset = dr[1];
-    ioFunctions['connection'] = function(socket) {
+    io.on('connection', function(socket) {
       console.log('emitting dataset');
       socket.emit('dataset', { 'dataset': dr[1] } );
-    };
+    });
     if (typeof dataset !== 'undefined') {
       fs.readFile(__dirname + '/spectraViewer/spectraViewer.html', function(error, data) {
 	if (error) {
@@ -60,5 +57,3 @@ function handler (request, response) {
 
 };
 
-
-io.on('connection', ioFunctions['connection']);
