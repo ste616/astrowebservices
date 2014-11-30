@@ -56,8 +56,8 @@ function handler (request, response) {
     });
   } else if (/^\/images\//.test(path)) {
     var dr = /^\/images\/(.*)$/.exec(path);
-    var ext = path.extname(path);
-    var contentType = 'image/' + ext;
+    var ext = /^.*\.([^\.]*)$/.exec(path);
+    var contentType = 'image/' + ext[1];
     response.writeHead(200, { 'Content-Type': contentType });
     fs.createReadStream('data/' + dr[1], 'utf-8').pipe(response);
   } else {
