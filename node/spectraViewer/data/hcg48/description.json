@@ -1,12 +1,12 @@
 {
-    'name': 'HCG 48',
-    'description': 'ATCA HI cube of the galaxy group HCG 48',
-    'image': {
-	'file': 'hcg48_moment0.png',
-	'size': {
-	    'real': [ 461, 210 ],
-	    'display-x': [ 135, 728 ],
-	    'display-y': [ 18, 612 ]
+    "name": "HCG 48",
+    "description": "ATCA HI cube of the galaxy group HCG 48",
+    "image": {
+	"file": "hcg48_moment0.png",
+	"size": {
+	    "real": [ 461, 210 ],
+	    "display-x": [ 135, 728 ],
+	    "display-y": [ 18, 612 ]
 	}
     }
 }
