@@ -23,11 +23,11 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 	   var imgPos = null;
 	   on(dom.byId('dataset-image'), 'mousemove', function(e) {
 	     if (imgPos === null) {
-	       ep = domGeom.position(e.target);
+	       imgPos = domGeom.position(e.target);
 	       imageTrans['top-left'] = [ imageTrans['display-x'][0],
-					  (ep['height'] - imageTrans['display-y'][1]) ];
+					  (imgPos['height'] - imageTrans['display-y'][1]) ];
 	       imageTrans['bottom-right'] = [ imageTrans['display-x'][1],
-					      (ep['height'] - imageTrans['display-y'][0]) ];
+					      (imgPos['height'] - imageTrans['display-y'][0]) ];
 	       imageTrans['display-width'] = imageTrans['display-x'][1] - imageTrans['display-x'][0];
 	       imageTrans['display-height'] = imageTrans['display-y'][1] - imageTrans['display-y'][0];	       
 	     }
