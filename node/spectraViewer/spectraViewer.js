@@ -26,7 +26,7 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 	       imgPos = domGeom.position(e.target);
 	       // console.log(imgPos);
 	       imageTrans['top-left'] = [ imageTrans['display-x'][0],
-					  (imgPos['h'] - imageTrans['display-y'][1]) ];
+					  (imgPos['h'] - imageTrans['display-y'][0] - imageTrans['display-y'][1]) ];
 	       imageTrans['bottom-right'] = [ imageTrans['display-x'][1],
 					      (imgPos['h'] - imageTrans['display-y'][0]) ];
 	       imageTrans['display-width'] = imageTrans['display-x'][1] - imageTrans['display-x'][0];
@@ -37,8 +37,8 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 	     // console.log(xoff + ' ' + yoff);
 	     if (xoff >= 0 && xoff <= imageTrans['display-width'] &&
 		 yoff >= 0 && yoff <= imageTrans['display-height']) {
-	       var px = xoff * (imageTrans['display-width'] / imageTrans['real'][0]);
-	       var py = yoff * (imageTrans['display-height'] / imageTrans['real'][1]);
+	       var px = xoff * (imageTrans['real'][0] / imageTrans['display-width']);
+	       var py = yoff * (imageTrans['real'][1] / imageTrans['display-height']);
 	       domAttr.set('x-pix', 'innerHTML', px);
 	       domAttr.set('y-pix', 'innerHTML', py);
 	     }
