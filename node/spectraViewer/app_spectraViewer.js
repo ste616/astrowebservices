@@ -23,7 +23,8 @@ function handler (request, response) {
 	if (err) throw err;
 	fileObj = JSON.parse(data);
 	socket.emit('dataset', { 'dataset': fileObj['name'],
-				 'image': '/images/' + dataset + '/' + fileObj['image']['file'] } );
+				 'image': '/images/' + dataset + '/' + fileObj['image']['file'],
+				 'size': fileObj['image']['size'] } );
       });
     });
     if (typeof dataset !== 'undefined') {
