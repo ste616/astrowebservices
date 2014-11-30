@@ -8,6 +8,7 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 	   };
 
 	   socket.on('dataset', function(data) {
+	     console.log(data);
 	     domAttr.set('dataset-name', 'innerHTML', data['dataset']);
 	     domAttr.set('dataset-image', 'src', data['image']);
 	     imageTrans = data['size'];
