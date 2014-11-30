@@ -48,6 +48,7 @@ var datasetHandler = function(dataset) {
   r['connection'] = function(socket) {
     if (ourSocket === null) {
       ourSocket = socket;
+      console.log('making new connection handler with socket ' + ourSocket);
       readFile();
       ourSocket.on('position-request', positionRequest);
     } else {
