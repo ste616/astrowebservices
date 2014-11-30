@@ -24,6 +24,7 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 	   on(dom.byId('dataset-image'), 'mousemove', function(e) {
 	     if (imgPos === null) {
 	       imgPos = domGeom.position(e.target);
+	       console.log(imgPos);
 	       imageTrans['top-left'] = [ imageTrans['display-x'][0],
 					  (imgPos['height'] - imageTrans['display-y'][1]) ];
 	       imageTrans['bottom-right'] = [ imageTrans['display-x'][1],
