@@ -4,6 +4,7 @@ require( [ "dojo/dom-attr" ],
 	   
 	   socket.on('dataset', function(data) {
 	     domAttr.set('dataset-name', 'innerHTML', data['dataset']);
+	     domAttr.set('dataset-image', 'src', data['image']);
 	   });
 });
 

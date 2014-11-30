@@ -23,7 +23,7 @@ function handler (request, response) {
 	if (err) throw err;
 	fileObj = JSON.parse(data);
 	socket.emit('dataset', { 'dataset': fileObj['name'],
-				 'image': fileObj['image']['file'] } );
+				 'image': '/images/' + dataset + '/' + fileObj['image']['file'] } );
       });
     });
     if (typeof dataset !== 'undefined') {
@@ -54,6 +54,12 @@ function handler (request, response) {
 	response.end();
       }
     });
+  } else if (/^\/images\//.test(path)) {
+    var dr = /^\/images\/(.*)$/.exec(path);
+    var ext = path.extname(path);
+    var contentType = 'image/' + ext;
+    response.writeHead(200, { 'Content-Type': contentType });
+    fs.createReadStream('data/' + dr[1], 'utf-8').pipe(response);
   } else {
     // Show the default page.
     response.writeHead(200, { 'Content-Type': 'text/html' });
