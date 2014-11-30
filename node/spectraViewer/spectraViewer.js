@@ -21,10 +21,10 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 
 	   socket.on('position-info', function(data) {
 	     imageData['coords'][data['x']][data['y']] = data['coord'];
-	     domAttr.set('x-pix', 'innerHTML', px);
-	     domAttr.set('y-pix', 'innerHTML', py);
-	     domAttr.set('ra-pos', 'innerHTML', imageData['coords'][rpx][rpy][0]);
-	     domAttr.set('dec-pos', 'innerHTML', imageData['coords'][rpx][rpy][1]);
+	     domAttr.set('x-pix', 'innerHTML', data['x']);
+	     domAttr.set('y-pix', 'innerHTML', data['y']);
+	     domAttr.set('ra-pos', 'innerHTML', data['coord'][0]);
+	     domAttr.set('dec-pos', 'innerHTML', data['coord'][1]);
 	     
 	   });
 
