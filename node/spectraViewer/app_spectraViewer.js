@@ -20,7 +20,12 @@ function handler (request, response) {
       console.log('emitting dataset');
       // Read the configuration file.
       fs.readFile('data/' + dataset + '/description.json', 'utf8', function(err, data) {
-	if (err) throw err;
+	if (err) {
+	  // Dataset doesn't exist or something is wrong.
+	  socket.emit('dataset', { 'dataset': 'UNKNOWN',
+				   'image': null, 'size': null });
+	  return;
+	}
 	fileObj = JSON.parse(data);
 	socket.emit('dataset', { 'dataset': fileObj['name'],
 				 'image': '/images/' + dataset + '/' + fileObj['image']['file'],
