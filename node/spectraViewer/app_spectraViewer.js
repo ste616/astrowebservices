@@ -7,14 +7,7 @@ var io = require('socket.io')(app);
 
 app.listen(8001);
 
-function handler (request, response) {
-  console.log('Connection.');
-  var path = url.parse(request.url).pathname;
-
-  if (/^\/spectraViewer\//.test(path)) {
-    // User wants the spectra viewer.
-    var dr = /^\/spectraViewer\/(.*)\/*$/.exec(path);
-    var dataset = dr[1];
+var handleDataset = function(dataset) {
     var fileObj;
     io.on('connection', function(socket) {
       console.log('emitting dataset');
@@ -24,7 +17,7 @@ function handler (request, response) {
 	  // Dataset doesn't exist or something is wrong.
 	  socket.emit('dataset', { 'dataset': 'UNKNOWN',
 				   'image': null, 'size': null });
-	  err = null;
+	  socket.disconnect();
 	  return;
 	}
 	fileObj = JSON.parse(data);
@@ -53,6 +46,17 @@ function handler (request, response) {
 	}
       });
     }
+};
+
+function handler (request, response) {
+  console.log('Connection.');
+  var path = url.parse(request.url).pathname;
+
+  if (/^\/spectraViewer\//.test(path)) {
+    // User wants the spectra viewer.
+    var dr = /^\/spectraViewer\/(.*)\/*$/.exec(path);
+    var dataset = dr[1];
+    handleDataset(dataset);
   } else if (/^\/scripts\//.test(path)) {
     // Return the user a JS.
     var dr = /^\/scripts\/(.*)$/.exec(path);
