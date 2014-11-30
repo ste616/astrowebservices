@@ -11,7 +11,7 @@ var ioFunctions = {
   'connection': function() {}
 };
 
-var handler = function(request, response) {
+function handler (request, response) {
   console.log('Connection.');
   var path = url.parse(request.url).pathname;
 
