@@ -10,8 +10,11 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 	     imageTrans = data['size'];
 	   });
 
-	   on(dom.byId('dataset-image'), 'mouseover', function(e) {
-	     var ep = domGeom.position(e);
+	   var imgPos = null;
+	   on(dom.byId('dataset-image'), 'mousemove', function(e) {
+	     if (imgPos === null) {
+	       ep = domGeom.position(e.target);
+	     }
 	     console.log(e);
 	   });
 });
