@@ -16,6 +16,8 @@ var handleDataset = function(dataset, request, response) {
 
       socket.on('disconnect', function() {
 	var i = allClients.indexOf(socket);
+	socket.on('connection', undefined);
+	socket.on('position-request', undefined);
 	allClients.splice(i, 1);
       });
 
