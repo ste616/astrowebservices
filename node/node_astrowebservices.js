@@ -7,7 +7,9 @@ var io = require('socket.io')(app);
 
 app.listen(8001);
 
-var ioFunctions = {};
+var ioFunctions = {
+  'connection': function() {}
+};
 
 var handler = function(request, response) {
   console.log('Connection.');
