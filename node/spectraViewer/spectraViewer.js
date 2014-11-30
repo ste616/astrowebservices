@@ -8,7 +8,6 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 	   };
 
 	   socket.on('dataset', function(data) {
-	     console.log(data);
 	     domAttr.set('dataset-name', 'innerHTML', data['dataset']);
 	     domAttr.set('dataset-image', 'src', data['image']);
 	     imageTrans = data['size'];
@@ -20,11 +19,19 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 	     }
 	   });
 
+	   socket.on('position-info', function(data) {
+	     imageData['coords'][data['x']][data['y']] = data['coord'];
+	     domAttr.set('x-pix', 'innerHTML', px);
+	     domAttr.set('y-pix', 'innerHTML', py);
+	     domAttr.set('ra-pos', 'innerHTML', imageData['coords'][rpx][rpy][0]);
+	     domAttr.set('dec-pos', 'innerHTML', imageData['coords'][rpx][rpy][1]);
+	     
+	   });
+
 	   var imgPos = null;
 	   on(dom.byId('dataset-image'), 'mousemove', function(e) {
 	     if (imgPos === null) {
 	       imgPos = domGeom.position(e.target);
-	       // console.log(imgPos);
 	       imageTrans['bottom-left'] = [ imageTrans['display-x'][0],
 					     imageTrans['display-y'][0] ];
 	       imageTrans['top-right'] = [ imageTrans['display-x'][1],
@@ -36,12 +43,16 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 	     var yoff = imageTrans['bottom-left'][1] - e.offsetY;
 	     if (xoff >= 0 && xoff <= imageTrans['display-width'] &&
 		 yoff >= 0 && yoff <= imageTrans['display-height']) {
-	       console.log(e);
-	       console.log(xoff + ' ' + yoff);
 	       var px = xoff * (imageTrans['real'][0] / imageTrans['display-width']);
 	       var py = yoff * (imageTrans['real'][1] / imageTrans['display-height']);
-	       domAttr.set('x-pix', 'innerHTML', px);
-	       domAttr.set('y-pix', 'innerHTML', py);
+	       var rpx = Math.floor(px);
+	       var rpy = Math.floor(py);
+	       if (imageData['coords'][rpx][rpy][0] !== null) {
+		 domAttr.set('ra-pos', 'innerHTML', imageData['coords'][rpx][rpy][0]);
+		 domAttr.set('dec-pos', 'innerHTML', imageData['coords'][rpx][rpy][1]);
+	       } else {
+		 socket.emit('position-request', { 'pix': [ rpx, rpy ] });
+	       }
 	     }
 
 	   });

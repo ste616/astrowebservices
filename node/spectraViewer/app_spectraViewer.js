@@ -19,12 +19,19 @@ function handler (request, response) {
     io.on('connection', function(socket) {
       console.log('emitting dataset');
       // Read the configuration file.
-      fs.readFile('data/' + dr[1] + '/description.json', 'utf8', function(err, data) {
+      fs.readFile('data/' + dataset + '/description.json', 'utf8', function(err, data) {
 	if (err) throw err;
 	fileObj = JSON.parse(data);
 	socket.emit('dataset', { 'dataset': fileObj['name'],
 				 'image': '/images/' + dataset + '/' + fileObj['image']['file'],
 				 'size': fileObj['image']['size'] } );
+	socket.on('position-request', function(data) {
+	  var n = 'data/' + dataset + '/positions/pos' + data['pix'][0] + '_' + data['pix'][1];
+	  fs.readFile(n, 'utf8', function(err, data) {
+	    var posObj = JSON.parse(data);
+	    socket.emit('position-info', posObj);
+	  });
+	});
       });
     });
     if (typeof dataset !== 'undefined') {
