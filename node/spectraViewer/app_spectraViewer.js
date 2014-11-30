@@ -46,6 +46,9 @@ var datasetHandler = function(dataset) {
   };
   
   r['connection'] = function(socket) {
+    if (dataset == 'null') {
+      return;
+    }
     if (ourSocket === null) {
       ourSocket = socket;
       console.log('making new connection handler with socket ' + ourSocket);
