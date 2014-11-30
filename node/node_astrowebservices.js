@@ -9,7 +9,7 @@ app.listen(8001);
 
 var ioFunctions = {};
 
-var handler = http.createServer(function(request, response) {
+var handler = function(request, response) {
   console.log('Connection.');
   var path = url.parse(request.url).pathname;
 
@@ -55,7 +55,7 @@ var handler = http.createServer(function(request, response) {
     response.end();
   }
 
-});
+};
 
 
 io.on('connection', ioFunctions['connection']);
