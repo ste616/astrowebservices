@@ -24,6 +24,7 @@ function handler (request, response) {
 	  // Dataset doesn't exist or something is wrong.
 	  socket.emit('dataset', { 'dataset': 'UNKNOWN',
 				   'image': null, 'size': null });
+	  err = null;
 	  return;
 	}
 	fileObj = JSON.parse(data);
