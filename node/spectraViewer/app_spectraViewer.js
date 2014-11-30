@@ -28,7 +28,7 @@ var datasetHandler = function(dataset) {
 	return;
       }
       fileObj = JSON.parse(data);
-      socket.emit('dataset', { 'dataset': fileObj['name'],
+      ourSocket.emit('dataset', { 'dataset': fileObj['name'],
 			       'image': '/images/' + dataset + '/' + fileObj['image']['file'],
 			       'size': fileObj['image']['size'] } );
     });
@@ -49,7 +49,7 @@ var datasetHandler = function(dataset) {
     if (ourSocket === null) {
       ourSocket = socket;
       readFile();
-      socket.on('position-request', positionRequest);
+      ourSocket.on('position-request', positionRequest);
     } else {
       return;
     }
