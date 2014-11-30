@@ -13,7 +13,7 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 	     imageTrans = data['size'];
 	     for (var i = 0; i < imageTrans['real'][0]; i++) {
 	       imageData['coords'].push([]);
-	       for (var j = 0; j < imageTrans['real'][1]; i++) {
+	       for (var j = 0; j < imageTrans['real'][1]; j++) {
 		 imageData['coords'][i].push([null, null]);
 	       }
 	     }
