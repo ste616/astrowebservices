@@ -12,8 +12,11 @@ var handleDataset = function(dataset, request, response) {
     io.on('connection', function(socket) {
       console.log('emitting dataset');
       // Read the configuration file.
-      fs.readFile('data/' + dataset + '/description.json', 'utf8', function(err, data) {
+      var dname = 'data/' + dataset + '/description.json';
+      console.log('reading ' + dname);
+      fs.readFile(dname, 'utf8', function(err, data) {
 	if (err) {
+	  console.log(err);
 	  // Dataset doesn't exist or something is wrong.
 	  socket.emit('dataset', { 'dataset': 'UNKNOWN',
 				   'image': null, 'size': null });
