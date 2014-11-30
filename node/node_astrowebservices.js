@@ -5,6 +5,8 @@ var url = require('url');
 var fs = require('fs');
 var io = require('socket.io');
 
+var ioFunctions = {};
+
 var server = http.createServer(function(request, response) {
   console.log('Connection.');
   var path = url.parse(request.url).pathname;
@@ -13,9 +15,9 @@ var server = http.createServer(function(request, response) {
     // User wants the spectra viewer.
     var dr = /^\/spectraViewer\/(.*)\/*$/.exec(path);
     var dataset = dr[1];
-    io.sockets.on('connection', function(socket) {
+    ioFunctions['connect'] = function(socket) {
       socket.emit('dataset', { 'dataset': dr[1] } );
-    });
+    };
     if (typeof dataset !== 'undefined') {
       fs.readFile(__dirname + '/spectraViewer/spectraViewer.html', function(error, data) {
 	if (error) {
@@ -56,3 +58,4 @@ var server = http.createServer(function(request, response) {
 server.listen(8001);
 
 io.listen(server);
+io.socket.on('connect', ioFunctions['connect']);
