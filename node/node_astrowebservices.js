@@ -24,9 +24,6 @@ var server = http.createServer(function(request, response) {
 	  response.end();
 	}
       });
-      response.writeHead(200, { 'Content-Type': 'text/html' });
-      response.write('viewing dataset ' + dataset);
-      response.end();
     }
   } else if (/^\/scripts\//.test(path)) {
     // Return the user a JS.
