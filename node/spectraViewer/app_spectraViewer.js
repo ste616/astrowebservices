@@ -26,7 +26,7 @@ function handler (request, response) {
 				 'image': '/images/' + dataset + '/' + fileObj['image']['file'],
 				 'size': fileObj['image']['size'] } );
 	socket.on('position-request', function(data) {
-	  var n = 'data/' + dataset + '/positions/pos' + data['pix'][0] + '_' + data['pix'][1];
+	  var n = './data/' + dataset + '/positions/pos_' + data['pix'][0] + '_' + data['pix'][1];
 	  fs.readFile(n, 'utf8', function(err, data) {
 	    var posObj = JSON.parse(data);
 	    socket.emit('position-info', posObj);
