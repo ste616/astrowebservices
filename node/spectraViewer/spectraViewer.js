@@ -26,11 +26,11 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 	       imgPos = domGeom.position(e.target);
 	       // console.log(imgPos);
 	       imageTrans['top-left'] = [ imageTrans['display-x'][0],
-					  (imgPos['h'] - imageTrans['display-y'][0] - imageTrans['display-y'][1]) ];
+					  imageTrans['display-y'][1] ];
 	       imageTrans['bottom-right'] = [ imageTrans['display-x'][1],
-					      (imgPos['h'] - imageTrans['display-y'][0]) ];
-	       imageTrans['display-width'] = imageTrans['display-x'][1] - imageTrans['display-x'][0];
-	       imageTrans['display-height'] = imageTrans['display-y'][1] - imageTrans['display-y'][0];	       
+					      imageTrans['display-y'][1] ];
+	       imageTrans['display-width'] = Math.abs(imageTrans['display-x'][1] - imageTrans['display-x'][0]);
+	       imageTrans['display-height'] = Math.abs(imageTrans['display-y'][1] - imageTrans['display-y'][0]);
 	     }
 	     var xoff = e.offsetX - imageTrans['top-left'][0];
 	     var yoff = e.offsetY - imageTrans['top-left'][1];
