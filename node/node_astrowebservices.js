@@ -1,13 +1,15 @@
 // This is the node.js server for AstroWebServices.com.
 
-var http = require('http');
+var app = require('http').createServer(handler);
 var url = require('url');
 var fs = require('fs');
-var io = require('socket.io');
+var io = require('socket.io')(app);
+
+app.listen(8001);
 
 var ioFunctions = {};
 
-var server = http.createServer(function(request, response) {
+var handler = http.createServer(function(request, response) {
   console.log('Connection.');
   var path = url.parse(request.url).pathname;
 
@@ -15,7 +17,7 @@ var server = http.createServer(function(request, response) {
     // User wants the spectra viewer.
     var dr = /^\/spectraViewer\/(.*)\/*$/.exec(path);
     var dataset = dr[1];
-    ioFunctions['connect'] = function(socket) {
+    ioFunctions['connection'] = function(socket) {
       socket.emit('dataset', { 'dataset': dr[1] } );
     };
     if (typeof dataset !== 'undefined') {
@@ -55,7 +57,5 @@ var server = http.createServer(function(request, response) {
 
 });
 
-server.listen(8001);
 
-io.listen(server);
-io.socket.on('connect', ioFunctions['connect']);
+io.on('connection', ioFunctions['connection']);
