@@ -13,6 +13,9 @@ var server = http.createServer(function(request, response) {
     // User wants the spectra viewer.
     var dr = /^\/spectraViewer\/(.*)\/*$/.exec(path);
     var dataset = dr[1];
+    io.sockets.on('connection', function(socket) {
+      socket.emit('dataset', { 'dataset': dr[1] } );
+    });
     if (typeof dataset !== 'undefined') {
       fs.readFile(__dirname + '/spectraViewer/spectraViewer.html', function(error, data) {
 	if (error) {
