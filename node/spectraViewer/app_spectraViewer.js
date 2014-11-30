@@ -9,44 +9,66 @@ app.listen(8001);
 
 var allClients = [];
 
-var handleDataset = function(dataset, request, response) {
-    var fileObj;
-    io.on('connection', function(socket) {
-      allClients.push(socket);
+var datasetHandler = function(dataset) {
+  var r = {};
+  var ourSocket = null;
 
-      socket.on('disconnect', function() {
-	var i = allClients.indexOf(socket);
-	socket.on('connection', undefined);
-	socket.on('position-request', undefined);
-	allClients.splice(i, 1);
-      });
+  var fileObj;
 
-      console.log('emitting dataset');
-      // Read the configuration file.
-      var dname = 'data/' + dataset + '/description.json';
-      console.log('reading ' + dname);
-      fs.readFile(dname, 'utf8', function(err, data) {
-	if (err) {
-	  console.log(err);
-	  // Dataset doesn't exist or something is wrong.
-	  socket.emit('dataset', { 'dataset': 'UNKNOWN',
-				   'image': null, 'size': null });
-	  socket.disconnect();
-	  return;
-	}
-	fileObj = JSON.parse(data);
-	socket.emit('dataset', { 'dataset': fileObj['name'],
-				 'image': '/images/' + dataset + '/' + fileObj['image']['file'],
-				 'size': fileObj['image']['size'] } );
-	socket.on('position-request', function(data) {
-	  var n = './data/' + dataset + '/positions/pos_' + data['pix'][0] + '_' + data['pix'][1];
-	  fs.readFile(n, 'utf8', function(err, data) {
-	    var posObj = JSON.parse(data);
-	    socket.emit('position-info', posObj);
-	  });
-	});
-      });
+  var readFile = function() {
+    var dname = 'data/' + dataset + '/description.json';
+    console.log('reading ' + dname);
+    fs.readFile(dname, 'utf8', function(err, data) {
+      if (err) {
+	console.log(err);
+	// Dataset doesn't exist or something is wrong.
+	ourSocket.emit('dataset', { 'dataset': 'UNKNOWN',
+				    'image': null, 'size': null });
+	ourSocket.disconnect();
+	return;
+      }
+      fileObj = JSON.parse(data);
+      socket.emit('dataset', { 'dataset': fileObj['name'],
+			       'image': '/images/' + dataset + '/' + fileObj['image']['file'],
+			       'size': fileObj['image']['size'] } );
     });
+  };
+
+  var positionRequest = function(idata) {
+    var n = './data/' + dataset + '/positions/pos_' + data['pix'][0] + '_' + data['pix'][1];
+    fs.readFile(n, 'utf8', function(err, data) {
+      if (err) {
+	return;
+      }
+      var posObj = JSON.parse(data);
+      ourSocket.emit('position-info', posObj);
+    });
+  };
+  
+  r['connection'] = function(socket) {
+    if (ourSocket === null) {
+      ourSocket = socket;
+      readFile();
+      socket.on('position-request', positionRequest);
+    } else {
+      return;
+    }
+  };
+
+
+  return r;
+};
+
+function handler (request, response) {
+  console.log('Connection.');
+  var path = url.parse(request.url).pathname;
+
+  if (/^\/spectraViewer\//.test(path)) {
+    // User wants the spectra viewer.
+    var dr = /^\/spectraViewer\/(.*)\/*$/.exec(path);
+    var dataset = dr[1];
+    var c = datasetHandler(dataset);
+    io.on('connection', c['connection']);
     if (typeof dataset !== 'undefined') {
       fs.readFile('./spectraViewer.html', function(error, data) {
 	if (error) {
@@ -60,17 +82,6 @@ var handleDataset = function(dataset, request, response) {
 	}
       });
     }
-};
-
-function handler (request, response) {
-  console.log('Connection.');
-  var path = url.parse(request.url).pathname;
-
-  if (/^\/spectraViewer\//.test(path)) {
-    // User wants the spectra viewer.
-    var dr = /^\/spectraViewer\/(.*)\/*$/.exec(path);
-    var dataset = dr[1];
-    handleDataset(dataset, request, response);
   } else if (/^\/scripts\//.test(path)) {
     // Return the user a JS.
     var dr = /^\/scripts\/(.*)$/.exec(path);
