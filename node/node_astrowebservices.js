@@ -6,19 +6,42 @@ var fs = require('fs');
 
 var server = http.createServer(function(request, response) {
   console.log('Connection.');
-  console.log(request.url);
   var path = url.parse(request.url).pathname;
-
 
   if (/^\/spectraViewer\//.test(path)) {
     // User wants the spectra viewer.
-    var dr = /^\/spectraViewer\/(.*)$/.exec(path);
+    var dr = /^\/spectraViewer\/(.*)\/*$/.exec(path);
     var dataset = dr[1];
     if (typeof dataset !== 'undefined') {
+      fs.readFile(__dirname + '/spectraViewer/spectraViewer.html', function(error, data) {
+	if (error) {
+	  response.writeHead(404);
+	  response.write('Unable to load spectra viewer.');
+	  response.end();
+	} else {
+	  response.writeHead(200, { 'Content-Type': 'text/html' });
+	  response.write(data, "utf8");
+	  response.end();
+	}
+      });
       response.writeHead(200, { 'Content-Type': 'text/html' });
       response.write('viewing dataset ' + dataset);
       response.end();
     }
+  } else if (/^\/scripts\//.test(path)) {
+    // Return the user a JS.
+    var dr = /^\/scripts\/(.*)$/.exec(path);
+    fs.readFile(__dirname + dr[1], function(error, data) {
+      if (error) {
+	response.writeHead(404);
+	response.write('Unable to find script.');
+	response.end();
+      } else {
+	response.writeHead(200, { 'Content-Type': 'application/javascript' });
+	response.write(data, "utf8");
+	response.end();
+      }
+    });
   } else {
     // Show the default page.
     response.writeHead(200, { 'Content-Type': 'text/html' });
