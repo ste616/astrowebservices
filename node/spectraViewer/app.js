@@ -18,10 +18,9 @@ var displayDataset = function(dataset) {
   
 };
 
-app.param('dataset', /(.*)\/*$/);
-
 app.get('/spectraViewer/:dataset', function(req, res, next) {
-  res.sendfile(__dirname + '/spectraViewer/spectraViewer.html');
-  displayDataset(req.params.dataset);
+  var dr = /^(.*)\/*$/.exec(req.params.dataset);
+  res.sendfile(__dirname + '/spectraViewer.html');
+  displayDataset(dr[1]);
 });
 
