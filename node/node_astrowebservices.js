@@ -28,7 +28,8 @@ var server = http.createServer(function(request, response) {
   } else if (/^\/scripts\//.test(path)) {
     // Return the user a JS.
     var dr = /^\/scripts\/(.*)$/.exec(path);
-    fs.readFile(__dirname + dr[1], function(error, data) {
+    console.log('requested a script ' + dr[1]);
+    fs.readFile(__dirname + "/" + dr[1], function(error, data) {
       if (error) {
 	response.writeHead(404);
 	response.write('Unable to find script.');
