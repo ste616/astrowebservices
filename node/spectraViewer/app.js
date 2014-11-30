@@ -9,7 +9,14 @@ var server = require('http').Server(app);
 var fs = require('fs');
 var io = require('socket.io')(server);
 
-server.listen(8001);
+app.configure(function(){
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(app.router);
+  app.use(express.static(__dirname + '/public'));
+});
 
 var displayDataset = function(dataset) {
   io.on('connection', function(socket) {
@@ -18,12 +25,10 @@ var displayDataset = function(dataset) {
   
 };
 
-app.get('/spectraViewer/:dataset', function(req, res, next) {
+app.get('/view/:dataset', function(req, res, next) {
   var dr = /^(.*)\/*$/.exec(req.params.dataset);
-  res.sendFile(__dirname + '/spectraViewer.html');
+  res.sendFile('./spectraViewer.html');
   displayDataset(dr[1]);
 });
 
-app.get('/:file', function(req, res, next) {
-  res.sendFile(__dirname + '/' + req.params.file);
-});
+server.listen(8001);
