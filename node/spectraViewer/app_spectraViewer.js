@@ -7,9 +7,18 @@ var io = require('socket.io')(app);
 
 app.listen(8001);
 
+var allClients = [];
+
 var handleDataset = function(dataset, request, response) {
     var fileObj;
     io.on('connection', function(socket) {
+      allClients.push(socket);
+
+      socket.on('disconnect', function() {
+	var i = allClients.indexOf(socket);
+	allClients.splice(i, 1);
+      });
+
       console.log('emitting dataset');
       // Read the configuration file.
       var dname = 'data/' + dataset + '/description.json';
