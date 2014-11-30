@@ -15,9 +15,16 @@ function handler (request, response) {
     // User wants the spectra viewer.
     var dr = /^\/spectraViewer\/(.*)\/*$/.exec(path);
     var dataset = dr[1];
+    var fileObj;
     io.on('connection', function(socket) {
       console.log('emitting dataset');
-      socket.emit('dataset', { 'dataset': dr[1] } );
+      // Read the configuration file.
+      fs.readFile('data/' + dr[1] + '/description.json', 'utf', function(err, data) {
+	if (err) throw err;
+	fileObj = JSON.parse(data);
+	socket.emit('dataset', { 'dataset': fileObj['name'],
+				 'image': fileObj['image']['file'] } );
+      });
     });
     if (typeof dataset !== 'undefined') {
       fs.readFile('./spectraViewer.html', function(error, data) {
