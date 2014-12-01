@@ -7,6 +7,7 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
       'coords': [],
       'spectra': []
     };
+    var chart = null;
     
     socket.on('dataset', function(data) {
       domAttr.set('dataset-name', 'innerHTML', data['dataset']);
@@ -28,6 +29,33 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
       }
       var dstring = window.atob(imageData['spectra'][x][y]);
       var spectrumData = JSON.parse(dstring, true);
+      for (var i = 0; i < spectrumData['vel'].length; i++) {
+	spectrumData['vel'][i] = parseFloat(spectrumData['vel'][i]);
+	spectrumData['amp'][i] = parseFloat(spectrumData['amp'][i]);
+      }
+      spectrumData['vel'].splice(0, 0, 'vel');
+      spectrumData['amp'].splice(0, 0, 'amp');
+      if (chart === null) {
+	chart = c3.generate({
+	  'bindto': '#spectrum-holder',
+	  'data': {
+	    'xs': {
+	      'amp': 'vel'
+	    },
+	    'columns': [
+	      spectrumData['vel'],
+	      spectrumData['amp']
+	    ]
+	  }
+	});
+      } else {
+	chart.flow({
+	  'columns': [
+	    spectrumData['vel'],
+	    spectrumData['amp']
+	  ]
+	});
+      }
     };
     
     socket.on('position-info', function(data) {
