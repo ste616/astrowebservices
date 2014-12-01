@@ -42,6 +42,10 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
 			parseFloat(spectrumData['amp'][i]) * 1000 ]);
       }
       var chartData = google.visualization.arrayToDataTable(plotData);
+      var chartFormatter = google.visualization.NumberFormat({
+	'fractionDigits': 2
+      });
+      chartFormatter.format(chartData, 1);
       if (chart === null) {
 	chart = new google.visualization.LineChart(dom.byId('spectrum-holder'));
 	chart.draw(chartData, chartOptions);
