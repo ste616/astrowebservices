@@ -95,7 +95,7 @@ function handler (request, response) {
     }
   } else if (/\.js$/.test(path)) {
     // Return the user a JS.
-    console.log('requested a script ' + dr[1]);
+    console.log('requested a script ' + path);
     fs.readFile(__dirname + "/" + path, function(error, data) {
       if (error) {
 	response.writeHead(404);
