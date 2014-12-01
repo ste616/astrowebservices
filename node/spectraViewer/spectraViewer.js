@@ -71,11 +71,9 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
 	var redge = imgPos['x'] + imgPos['w'];
 	var rwidth = vs.w - redge - 20;
 	if (rwidth > 200) {
-	  domStyle.set('image-holder', {
-	    'float': 'left'
-	  });
 	  domStyle.set('spectrum-holder', {
-	    'width': rwidth + 'px'
+	    'width': rwidth + 'px',
+	    'float': 'right'
 	  });
 	}
 	imageTrans['bottom-left'] = [ imageTrans['display-x'][0],
