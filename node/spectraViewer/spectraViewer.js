@@ -57,7 +57,7 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
     });
     
     var imgPos = null;
-    on(dom.byId('dataset-image'), 'mousemove', function(e) {
+    on(dom.byId('dataset-image'), 'click', function(e) {
       if (imgPos === null) {
 	imgPos = domGeom.position(e.target);
 	imageTrans['bottom-left'] = [ imageTrans['display-x'][0],
