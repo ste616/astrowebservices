@@ -1,6 +1,5 @@
-require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/json",
-	   "d3/d3.min", "c3/c3" ],
-  function(domAttr, on, domGeom, dom, JSON, d3, c3) {
+require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/json" ],
+  function(domAttr, on, domGeom, dom, JSON) {
     var socket = io('http://astrowebservices.com:8001');
     
     var imageTrans;
@@ -10,6 +9,8 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
     };
     var chart = null;
     
+    google.load('visualisation', '1', { 'packages': [ 'corechart' ] });
+
     socket.on('dataset', function(data) {
       domAttr.set('dataset-name', 'innerHTML', data['dataset']);
       domAttr.set('dataset-image', 'src', data['image']);
@@ -30,32 +31,17 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
       }
       var dstring = window.atob(imageData['spectra'][x][y]);
       var spectrumData = JSON.parse(dstring, true);
+      var plotData = [ ['Velocity', 'Amplitude' ] ];
       for (var i = 0; i < spectrumData['vel'].length; i++) {
-	spectrumData['vel'][i] = parseFloat(spectrumData['vel'][i]);
-	spectrumData['amp'][i] = parseFloat(spectrumData['amp'][i]);
+	plotData.push([ parseFloat(spectrumData['vel'][i]),
+			parseFloat(spectrumData['amp'][i]) ]);
       }
-      spectrumData['vel'].splice(0, 0, 'vel');
-      spectrumData['amp'].splice(0, 0, 'amp');
+      var chartData = google.visualization.arrayToDataTable(plotData);
       if (chart === null) {
-	chart = c3.generate({
-	  'bindto': '#spectrum-holder',
-	  'data': {
-	    'xs': {
-	      'amp': 'vel'
-	    },
-	    'columns': [
-	      spectrumData['vel'],
-	      spectrumData['amp']
-	    ]
-	  }
-	});
+	chart = new google.visualization.LineChart(dom.byId('spectrum-holder'));
+	chart.draw(chartData);
       } else {
-	chart.flow({
-	  'columns': [
-	    spectrumData['vel'],
-	    spectrumData['amp']
-	  ]
-	});
+	chart.draw(chartData);
       }
     };
     
