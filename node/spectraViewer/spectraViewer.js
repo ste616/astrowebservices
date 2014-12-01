@@ -69,7 +69,7 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
       if (imgPos === null) {
 	imgPos = domGeom.position(e.target);
 	var redge = imgPos['x'] + imgPos['w'];
-	var rwidth = vs.w - redge - 20;
+	var rwidth = vs.w - redge - 40;
 	if (rwidth > 200) {
 	  domStyle.set('spectrum-holder', {
 	    'width': rwidth + 'px',
