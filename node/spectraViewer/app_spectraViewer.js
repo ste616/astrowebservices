@@ -93,7 +93,7 @@ function handler (request, response) {
 	}
       });
     }
-  } else if (/^\/scripts\//.test(path)) {
+  } else if (/\.js$/.test(path)) {
     // Return the user a JS.
     var dr = /^\/scripts\/(.*)$/.exec(path);
     console.log('requested a script ' + dr[1]);
