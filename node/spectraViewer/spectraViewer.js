@@ -9,7 +9,7 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
     };
     var chart = null;
     
-    // google.load('visualization', '1', { 'packages': [ 'corechart' ] });
+    google.load('visualization', '1', { 'packages': [ 'corechart' ] });
 
     socket.on('dataset', function(data) {
       domAttr.set('dataset-name', 'innerHTML', data['dataset']);
