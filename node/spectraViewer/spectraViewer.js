@@ -1,5 +1,6 @@
-require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/json" ],
-  function(domAttr, on, domGeom, dom, JSON) {
+require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/json",
+	   "dojo/window", "dojo/dom-style" ],
+  function(domAttr, on, domGeom, dom, JSON, win, domStyle) {
     var socket = io('http://astrowebservices.com:8001');
     
     var imageTrans;
@@ -9,6 +10,8 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
     };
     var chart = null;
     
+    var vs = win.getBox();
+
     google.load('visualization', '1', { 'packages': [ 'corechart' ] });
     var chartOptions = {
       'vAxis': { 'title': 'Flux Density (mJy)' },
@@ -65,6 +68,16 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
     on(dom.byId('dataset-image'), 'click', function(e) {
       if (imgPos === null) {
 	imgPos = domGeom.position(e.target);
+	var redge = imgPos['x'] + imgPos['w'];
+	var rwidth = vs.w - redge - 20;
+	if (rwidth > 200) {
+	  domStyle.set('image-holder', {
+	    'float': 'left'
+	  });
+	  domStyle.set('spectrumHolder', {
+	    'width': rwidth + 'px'
+	  });
+	}
 	imageTrans['bottom-left'] = [ imageTrans['display-x'][0],
 				      imageTrans['display-y'][0] ];
 	imageTrans['top-right'] = [ imageTrans['display-x'][1],
