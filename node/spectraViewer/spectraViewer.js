@@ -1,5 +1,6 @@
-require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/json" ],
-  function(domAttr, on, domGeom, dom, JSON) {
+require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/json",
+	   "d3/d3.min", "c3/c3" ],
+  function(domAttr, on, domGeom, dom, JSON, d3, c3) {
     var socket = io('http://astrowebservices.com:8001');
     
     var imageTrans;
