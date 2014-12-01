@@ -36,12 +36,21 @@ var datasetHandler = function(dataset) {
 
   var positionRequest = function(idata) {
     var n = './data/' + dataset + '/positions/pos_' + idata['pix'][0] + '_' + idata['pix'][1];
+    var d = './data/' + dataset + '/spectra/spectrum_' + idata['pix'][0] + '_' + idata['pix'][1];
     fs.readFile(n, 'utf8', function(err, data) {
       if (err) {
 	return;
       }
       var posObj = JSON.parse(data);
-      ourSocket.emit('position-info', posObj);
+      fs.readFile(d, 'utf8', function(derr, ddata) {
+	if (derr) {
+	  return;
+	}
+	var dataBuf = new Buffer(ddata).toString('base64');
+	
+	ourSocket.emit('position-info', { 'position': posObj,
+					  'spectrum': dataBuf });
+      });
     });
   };
   
