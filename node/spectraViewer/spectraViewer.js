@@ -32,12 +32,13 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
     
     socket.on('position-info', function(data) {
       imageData['coords'][data['position']['x']][data['position']['y']] = data['position']['coord'];
-      domAttr.set('x-pix', 'innerHTML', data['x']);
-      domAttr.set('y-pix', 'innerHTML', data['y']);
-      domAttr.set('ra-pos', 'innerHTML', data['coord'][0]);
-      domAttr.set('dec-pos', 'innerHTML', data['coord'][1]);
+      domAttr.set('x-pix', 'innerHTML', data['position']['x']);
+      domAttr.set('y-pix', 'innerHTML', data['position']['y']);
+      domAttr.set('ra-pos', 'innerHTML', data['position']['coord'][0]);
+      domAttr.set('dec-pos', 'innerHTML', data['position']['coord'][1]);
       imageData['spectra'][data['position']['x']][data['position']['y']] =
 	data['spectrum'];
+      plotSpectrum(data['position']['x'], data['position']['y']);
     });
     
     var imgPos = null;
