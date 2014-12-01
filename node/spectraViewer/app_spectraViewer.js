@@ -1,4 +1,4 @@
-// This is the node.js server for AstroWebServices.com.
+// This is the node.js server for the AstroWebServices.com spectrum viewer.
 
 var app = require('http').createServer(handler);
 var url = require('url');
@@ -116,6 +116,10 @@ function handler (request, response) {
     var contentType = 'image/' + ext[1];
     response.writeHead(200, { 'Content-Type': contentType });
     fs.createReadStream('data/' + dr[1], 'utf-8').pipe(response);
+  } else if (/^\/css\//.test(path)) {
+    var dr = /^\/css\/(.*)$/.exec(path);
+    response.writeHead(200, { 'Content-Type': 'text/css' });
+    fs.createReadStream(__dirname + '/' + dr[1], 'utf-8').pipe(response);
   } else {
     // Show the default page.
     response.writeHead(200, { 'Content-Type': 'text/html' });

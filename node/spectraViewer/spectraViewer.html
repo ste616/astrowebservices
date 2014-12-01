@@ -1,21 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link href="/css/jslib/c3/0.4.5/c3.css" rel="stylesheet" type="text/css"></link>
     <title>AstroWebServices Spectra Viewer</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/scripts/jslib/dojo/configure.js"></script>
     <script src="/scripts/jslib/dojo/1.10/dojo/dojo.js"></script>
+    <script src="/scripts/jslib/d3/3.4.13/d3.min.js" charset="utf-8"></script>
+    <script src="/scripts/jslib/c3/0.4.5/cs.js"></script>
   </head>
 
   <body>
     <h1>Spectra Viewer: <span id="dataset-name"></span></h1>
-    <img id="dataset-image" src=""></img>
+    <div class="imageHolder">
+      <img id="dataset-image" src=""></img>
+    </div>
+    <div class="spectrumHolder">
+    </div>
     <div>
       <p>X: <span id="x-pix"></span></p>
       <p>Y: <span id="y-pix"></span></p>
       <p>RA: <span id="ra-pos"></span></p>
       <p>Dec: <span id="dec-pos"></span></p>
     </div>
+
 
     <script src="/scripts/spectraViewer.js"></script>
 

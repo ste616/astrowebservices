@@ -1,5 +1,5 @@
-require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
-  function(domAttr, on, domGeom, dom) {
+require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/json" ],
+  function(domAttr, on, domGeom, dom, JSON) {
     var socket = io('http://astrowebservices.com:8001');
     
     var imageTrans;
@@ -27,7 +27,7 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom" ],
 	return;
       }
       var dstring = window.atob(imageData['spectra'][x][y]);
-      console.log(dstring);
+      var spectrumData = JSON.parse(dstring, true);
     };
     
     socket.on('position-info', function(data) {
