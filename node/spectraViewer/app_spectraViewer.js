@@ -7,8 +7,6 @@ var io = require('socket.io')(app);
 
 app.listen(8001);
 
-var allClients = [];
-
 var datasetHandler = function(dataset) {
   var r = {};
   var ourSocket = null;
@@ -110,20 +108,10 @@ function handler (request, response) {
 	response.end();
       }
     });
-  } else if (/^\/images\//.test(path)) {
-    var dr = /^\/images\/(.*)$/.exec(path);
-    var ext = /^.*\.([^\.]*)$/.exec(path);
-    var contentType = 'image/' + ext[1];
-    response.writeHead(200, { 'Content-Type': contentType });
-    fs.createReadStream('data/' + dr[1], 'utf-8').pipe(response);
-  } else if (/^\/css\//.test(path)) {
-    var dr = /^\/css\/(.*)$/.exec(path);
-    response.writeHead(200, { 'Content-Type': 'text/css' });
-    fs.createReadStream(__dirname + '/' + dr[1], 'utf-8').pipe(response);
   } else {
     // Show the default page.
     response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.write('hello world');
+    response.write("You've come to the wrong place!");
     response.end();
   }
 

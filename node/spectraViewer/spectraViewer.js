@@ -10,6 +10,10 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
     var chart = null;
     
     google.load('visualization', '1', { 'packages': [ 'corechart' ] });
+    var chartOptions = {
+      'vAxis': { 'title': 'Flux Density (mJy)' },
+      'hAxis': { 'title': 'Velocity (km/s)' }
+    };
 
     socket.on('dataset', function(data) {
       domAttr.set('dataset-name', 'innerHTML', data['dataset']);
@@ -35,14 +39,14 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
       var plotData = [ ['Velocity', 'Amplitude' ] ];
       for (var i = 0; i < spectrumData['vel'].length; i++) {
 	plotData.push([ parseFloat(spectrumData['vel'][i]),
-			parseFloat(spectrumData['amp'][i]) ]);
+			parseFloat(spectrumData['amp'][i]) * 1000 ]);
       }
       var chartData = google.visualization.arrayToDataTable(plotData);
       if (chart === null) {
 	chart = new google.visualization.LineChart(dom.byId('spectrum-holder'));
-	chart.draw(chartData);
+	chart.draw(chartData, chartOptions);
       } else {
-	chart.draw(chartData);
+	chart.draw(chartData, chartOptions);
       }
     };
     
