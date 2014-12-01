@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style>
+      .imageHolder { float: left; }
+      .position { clear: both; }
+    </style>
     <title>AstroWebServices Spectra Viewer</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://www.google.com/jsapi"></script>
@@ -15,7 +19,7 @@
     </div>
     <div class="spectrumHolder" id="spectrum-holder">
     </div>
-    <div>
+    <div class="position">
       <p>X: <span id="x-pix"></span></p>
       <p>Y: <span id="y-pix"></span></p>
       <p>RA: <span id="ra-pos"></span></p>
