@@ -74,7 +74,7 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
 	  domStyle.set('image-holder', {
 	    'float': 'left'
 	  });
-	  domStyle.set('spectrumHolder', {
+	  domStyle.set('spectrum-holder', {
 	    'width': rwidth + 'px'
 	  });
 	}
