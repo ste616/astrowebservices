@@ -14,7 +14,7 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
     socket.on('dataset', function(data) {
       domAttr.set('dataset-name', 'innerHTML', data['dataset']);
       domAttr.set('dataset-image', 'src',
-		  'https://astrowebservices.com/~ste616/tools/spectraViewer ' + data['image']);
+		  'https://astrowebservices.com/~ste616/tools/spectraViewer' + data['image']);
       imageTrans = data['size'];
       for (var i = 0; i < imageTrans['real'][0]; i++) {
 	imageData['coords'].push([]);
