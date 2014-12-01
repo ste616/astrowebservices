@@ -1,5 +1,5 @@
-require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/json" ],
-  function(domAttr, on, domGeom, dom, JSON) {
+require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/json", "dojo/number" ],
+  function(domAttr, on, domGeom, dom, JSON, number) {
     var socket = io('http://astrowebservices.com:8001');
     
     var imageTrans;
@@ -39,7 +39,7 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
       var plotData = [ ['Velocity', 'Amplitude' ] ];
       for (var i = 0; i < spectrumData['vel'].length; i++) {
 	plotData.push([ parseFloat(spectrumData['vel'][i]),
-			parseFloat(spectrumData['amp'][i]) * 1000 ]);
+			number.round(parseFloat(spectrumData['amp'][i]) * 1000, { 'places': 2 }) ]);
       }
       var chartData = google.visualization.arrayToDataTable(plotData);
       if (chart === null) {
