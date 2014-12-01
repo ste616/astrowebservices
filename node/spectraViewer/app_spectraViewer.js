@@ -95,9 +95,8 @@ function handler (request, response) {
     }
   } else if (/\.js$/.test(path)) {
     // Return the user a JS.
-    var dr = /^\/scripts\/(.*)$/.exec(path);
     console.log('requested a script ' + dr[1]);
-    fs.readFile(__dirname + "/" + dr[1], function(error, data) {
+    fs.readFile(__dirname + "/" + path, function(error, data) {
       if (error) {
 	response.writeHead(404);
 	response.write('Unable to find script.');
