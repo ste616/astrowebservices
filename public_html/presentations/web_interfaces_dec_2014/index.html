@@ -19,6 +19,10 @@
 		    
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="/jslib/reveal.js/2.6.2/lib/css/zenburn.css"></link>
+
+    <!-- Aladin Lite -->
+    <link rel="stylesheet" href="http://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.css"></link>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js" charset="utf-8"></script>
 		      
     <!-- If the query includes 'print-pdf', include the PDF print sheet -->
     <script>
@@ -84,9 +88,29 @@
 	    to make a new page.
 	  </p>
 	  <p>
-	    <strong>Examples:</strong> NED, SIMBAD, ATCA Calibrator Database
+	    <strong>Examples:</strong> <a href="https://ned.ipac.caltech.edu/">NED</a>, 
+	    <a href="http://simbad.u-strasbg.fr/simbad/">SIMBAD</a>,
+	    <a href="http://www.narrabri.atnf.csiro.au/calibrators/">ATCA Calibrator Database</a>
 	  </p>
-	  <img src="ned_screenshot.png"></img>
+	  <img src="ned_screenshot.png"></img>	
+	</section>
+
+	<section>
+	  <h3>Interactive Views</h3>
+	  <p>
+	    An interface that changes based on user input or model updates,
+	    but doesn't require the browser to load another page.
+	  </p>
+	  <p>
+	    <strong>Examples:</strong> <a href="http://sky-map.org/">sky-map.org</a>,
+	    <a href="http://aladin.u-strasbg.fr/AladinLite/">Aladin Lite</a>.
+	  </p>
+	  <div id="aladin-lite-div" style="width:400px;height:400px;"></div>
+	  <script type="text/javascript" 
+	    src="http://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.js" charset="utf-8"></script>
+	  <script type="text/javascript">
+	    var aladin = A.aladin('#aladin-lite-div', {survey: "P/DSS2/color", fov:60, target: "19:39:25.026 -63:42:45.63"});
+	  </script>
 	</section>
 	
 	<!-- Example of nested vertical slides -->
