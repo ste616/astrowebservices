@@ -92,8 +92,11 @@ require( [ "dojo/dom-attr", "dojo/on", "dojo/dom-geometry", "dojo/dom", "dojo/js
 	var rpx = Math.floor(px);
 	var rpy = Math.floor(py);
 	if (imageData['coords'][rpx][rpy][0] !== null) {
+	  domAttr.set('x-pix', 'innerHTML', rpx);
+	  domAttr.set('y-pix', 'innerHTML', rpy);
 	  domAttr.set('ra-pos', 'innerHTML', imageData['coords'][rpx][rpy][0]);
 	  domAttr.set('dec-pos', 'innerHTML', imageData['coords'][rpx][rpy][1]);
+	  plotSpectrum(rpx, rpy);
 	} else {
 	  socket.emit('position-request', { 'pix': [ rpx, rpy ] });
 	}
