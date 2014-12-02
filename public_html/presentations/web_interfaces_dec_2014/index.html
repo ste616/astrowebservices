@@ -230,59 +230,59 @@
 	  </section>
 	  <section>
 	    <h3>The ATCA Calibrator Database</h3>
-	    <p>
+	    <p class="left-justified">
 	      The database is (unsuprisingly) for storage of the data.
 	    </p>
-	    <p>
+	    <p class="left-justified">
 	      Used the MySQL database since ATNF has a dedicated MySQL server for this
 	      purpose.
 	    </p>
-	    <p>
+	    <p class="left-justified">
 	      Other choices: PostgreSQL, flat files...
 	    </p>
 	  </section>
 	  <section>
 	    <h3>The ATCA Calibrator Database</h3>
-	    <p>
+	    <p class="left-justified">
 	      Need some process on the server that can take requests from a client web
 	      browser, query the database, and return the results.
 	    </p>
-	    <p>
+	    <p class="left-justified">
 	      Used Perl and the CGI library for the browser interaction, along with the 
 	      Class::DBI library to make the database queries easy. I know all these tools,
 	      so that's what I used.
 	    </p>
-	    <p>
+	    <p class="left-justified">
 	      Other choices: Python, PHP, Javascript...
 	    </p>
 	  </section>
 	  <section>
 	    <h3>The ATCA Calibrator Database</h3>
-	    <p>
+	    <p class="left-justified">
 	      The views are made to be easy to use and nice to look at.
 	    </p>
-	    <p>
+	    <p class="left-justified">
 	      Used HTML5 and CSS3. All the view pages are plain HTML/CSS that load
 	      quickly and then start querying the database. This makes the site feel
 	      more responsive.
 	    </p>
-	    <p>
+	    <p class="left-justified">
 	      Other choices: generate HTML on-the-fly on the server (old-fashioned),
 	      REST-ful page generation
 	    </p>
 	  </section>
 	  <section>
 	    <h3>The ATCA Calibrator Database</h3>
-	    <p>
+	    <p class="left-justified">
 	      Once the view page is loaded, the database needs to be queried and the
 	      page populated with the result.
 	    </p>
-	    <p>
+	    <p class="left-justified">
 	      This is done with Javascript. Unfortunately, different browsers still have
 	      slightly different APIs for many functions. I use the Dojo Toolkit to abstract
 	      all these differences away, and to make the charts that appear on the pages.
 	    </p>
-	    <p>
+	    <p class="left-justified">
 	      Other choices: straight Javascript, jQuery, mootools, D3...
 	    </p>
 	  </section>
